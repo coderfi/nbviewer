@@ -570,7 +570,9 @@ class URLHandler(RenderingHandler):
         else:
             query = None
 
-        remote_url = u"{}://{}".format(proto, quote(url))
+        hostport, path = url.split("/", 1)
+        # do not quote the hostname and possible port
+        remote_url = u"{}://{}/{}".format(proto, hostport, quote(path))
         if query:
             remote_url = remote_url + '?' + query
         if not url.endswith('.ipynb'):
